@@ -33,23 +33,20 @@ pipeline {
    
 
 	stage('Build') { 
-            steps { 
-               withDockerRegistry([credentialsId: "dockerlogin", url: ""]) {
-                 script{
-                 app =  docker.build("asg")
-                 }
-               }
+             app = docker.build("maheshdcloud84/devsecops")
             }
     }
 
 	stage('Push') {
-            steps {
+            /*steps {
                 script{
                     docker.withRegistry('https://145988340565.dkr.ecr.us-west-2.amazonaws.com', 'ecr:us-west-2:aws-credentials') {
                     app.push("latest")
                     }
                 }
-            }
+            }*/
+            docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
+            app.push("${env.BUILD_NUMBER}")
     	}
 	    
   }
