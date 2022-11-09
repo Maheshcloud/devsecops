@@ -33,20 +33,25 @@ pipeline {
    
 
 	stage('Build') { 
-             app = docker.build("maheshdcloud84/devsecops")
+            steps { 
+               withDockerRegistry([credentialsId: "dockerhub", url: ""]) {
+                 script{
+                 app =  docker.build("maheshdcloud84/devssecops")
+                 }
+               }
             }
     }
 
 	stage('Push') {
-            /*steps {
+            steps {
                 script{
-                    docker.withRegistry('https://145988340565.dkr.ecr.us-west-2.amazonaws.com', 'ecr:us-west-2:aws-credentials') {
-                    app.push("latest")
+                    //docker.withRegistry('https://145988340565.dkr.ecr.us-west-2.amazonaws.com', 'ecr:us-west-2:aws-credentials') {
+                    //app.push("latest")
+                    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
+                    app.push("${env.BUILD_NUMBER}")
                     }
                 }
-            }*/
-            docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
-            app.push("${env.BUILD_NUMBER}")
+            }
     	}
 	    
   }
