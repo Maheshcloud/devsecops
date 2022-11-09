@@ -31,7 +31,7 @@ pipeline {
 	stage('Build') { 
              app = docker.build("maheshdcloud84/devsecops")
             }
-    }
+    
 
 	stage('Push') {
             /*steps {
