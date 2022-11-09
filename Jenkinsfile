@@ -33,15 +33,9 @@ pipeline {
    
 
 	stage('Build') { 
-            steps { 
-               withDockerRegistry([credentialsId: "dockerlogin", url: ""]) {
-                 script{
-                 app =  docker.build("asg")
-                 }
-               }
              app = docker.build("maheshdcloud84/devsecops")
             }
-    }
+    
 
 	stage('Push') {
             steps {
@@ -51,12 +45,13 @@ pipeline {
                     app.push("latest")
                     }
                 }
-            }
             }*/
+            
             docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
             app.push("${env.BUILD_NUMBER}")
     	}
+	    }
 
   }
 	}
-   }
+   
