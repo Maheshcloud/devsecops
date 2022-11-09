@@ -4,11 +4,11 @@ pipeline {
         maven 'maven'  
     }
    stages{
- //   stage('CompileandRunSonarAnalysis') {
- //          steps {	
- //		sh 'mvn clean verify sonar:sonar -Dsonar.projectKey=mygit-project -Dsonar.organization=mygit-project -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=3116af451be6386c60b5af22a992a15400eb9fe3'
- //			}
- //  }
+    stage('CompileandRunSonarAnalysis') {
+          steps {	
+ 		sh 'mvn clean verify sonar:sonar -Dsonar.projectKey=mygit-project -Dsonar.organization=mygit-project -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=3116af451be6386c60b5af22a992a15400eb9fe3'
+ 			}
+   }
 
 	stage('RunSCAAnalysisUsingSnyk') {
             steps {		
@@ -24,11 +24,7 @@ pipeline {
        }
    }
     
-   stage('CompileandRunSonarAnalysis') {
-          steps {	
- 		sh 'mvn clean verify sonar:sonar -Dsonar.projectKey=mygit-project -Dsonar.organization=mygit-project -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=3116af451be6386c60b5af22a992a15400eb9fe3'
- 			}
-   }
+ 
    
    
 
