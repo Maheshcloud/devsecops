@@ -53,12 +53,12 @@ pipeline {
                 }
             }
     	}
-	/*  stage('slack notification'){
+	  stage('slack notification'){
        steps{
             slackSend baseUrl: 'https://hooks.slack.com/services/', channel: '#jenkins', color: 'green', message: 'Build info', tokenCredentialId: 'slack_notification', username: 'maheshdte'
           // slackSend "Build Started - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
        }
-   */
+   
 	   
 	    post {
        
