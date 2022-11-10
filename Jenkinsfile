@@ -53,31 +53,28 @@ pipeline {
                 }
             }
     	}
-	  stage('slack notification'){
+	/*  stage('slack notification'){
        steps{
             slackSend baseUrl: 'https://hooks.slack.com/services/', channel: '#jenkins', color: 'green', message: 'Build info', tokenCredentialId: 'slack_notification', username: 'maheshdte'
           // slackSend "Build Started - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
        }
-   
+   */
 	   
 	    post {
        
 		    success {
-           notifyBuild(currentBuild.result)
+           slackSend "Build deployed successfully - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
        }
        // triggered when red sign
        failure {
-           notifyBuild(currentBuild.result)
+           slackSend failOnError:true message:"Build failed  - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
        }
-       // trigger every-works
-       always {
-           notifyBuild(currentBuild.result)
-       }
+      
     }
 		  }    
   }
 }
-
+/*
 
 def notifyBuild(String buildStatus = 'STARTED') {
   // build status of null means successful
@@ -103,4 +100,4 @@ def notifyBuild(String buildStatus = 'STARTED') {
 
   // Send notifications
   slackSend (color: colorCode, message: summary)
-}
+}*/
