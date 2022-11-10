@@ -43,9 +43,9 @@ pipeline {
 	  stage('slack notification'){
        steps{
            // slackSend baseUrl: 'https://hooks.slack.com/services/', channel: '#jenkins', color: 'green', message: 'Build info', tokenCredentialId: 'slack_notification', username: 'maheshdte'
-          // slackSend "Build Started - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
+           slackSend "Build Started - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
        }
-   }
+   
 	   
 	    post {
        // only triggered when blue or green sign
@@ -61,6 +61,7 @@ pipeline {
            notifySlack()
        }
     }
+		  }
 
 	stage('Push') {
             steps {
