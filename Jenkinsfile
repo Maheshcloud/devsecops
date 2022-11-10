@@ -10,7 +10,7 @@ pipeline {
  //   stage('CompileandRunSonarAnalysis') {
  //          steps {	
  //		sh 'mvn clean verify sonar:sonar -Dsonar.projectKey=mygit-project -Dsonar.organization=mygit-project -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$sonar'
- //			}
+ //	}
  //  }
 
 	stage('RunSCAAnalysisUsingSnyk') {
