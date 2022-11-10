@@ -1,0 +1,21 @@
+name: Pull request review
+on:
+  pull_request_review:
+  pull_request:
+    branches: main
+
+jobs:
+  check:
+    name: Checking required reviews
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.head.repo.full_name == github.event.pull_request.base.repo.full_name
+    steps:
+      - uses: Automattic/action-required-review@v3
+        with:
+          requirements: |
+            - paths: unmatched
+              teams:
+                - @maheshcloud
+        status: Required review
+        fail: true
+        token: ${{ secrets.GITHUB_TOKEN }}
