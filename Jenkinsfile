@@ -4,7 +4,7 @@ pipeline {
         cron('H H 1,15 1-11 *')
     }
   tools { 
-        maven 'maven'  
+         maven 'maven'  
     }
    stages{
  //   stage('CompileandRunSonarAnalysis') {
