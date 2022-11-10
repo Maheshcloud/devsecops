@@ -50,11 +50,11 @@ pipeline {
 	    post {
        // only triggered when blue or green sign
        success {
-           notifySlack()
+           notifySlack(SUCCESS)
        }
        // triggered when red sign
        failure {
-           notifySlack()
+           notifySlack(UNSTABLE)
        }
        // trigger every-works
        always {
