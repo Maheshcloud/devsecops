@@ -8,5 +8,6 @@ jobs:
     runs-on: ubuntu-latest
     name: Check PR title 
     steps:
-    - name: Run
-      run: [[ "${{github.event.pull_request.title }}" =~ ^[A-Z]+-[0-9]+[a-z0-9]*:[[:space:]][a-zA-Z0-9[:space:]-]+]] && exit 0 || exit 1
+      - name: Run
+        run: |
+          [[ "${{github.event.pull_request.title }}" =~ ^[A-Z]+-[0-9]+[a-z0-9-]*:[[:space:]][a-zA-Z0-9[:space:]-]+ ]] && exit 0 || exit 1
