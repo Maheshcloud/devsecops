@@ -36,7 +36,7 @@ pipeline {
             steps { 
                withDockerRegistry([credentialsId: "dockerhub", url: ""]) {
                  script{
-                 app =  docker.build("maheshdcloud84/devsecops")
+                 app =  docker.build("maheshcloud84/devsecops")
                  }
                }
             }
