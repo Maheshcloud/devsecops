@@ -1,12 +1,15 @@
 pipeline {
   agent any
+  triggers {
+        cron('H H 1,15 1-11 *')
+    }
   tools { 
         maven 'maven'  
     }
    stages{
  //   stage('CompileandRunSonarAnalysis') {
  //          steps {	
- //		sh 'mvn clean verify sonar:sonar -Dsonar.projectKey=mygit-project -Dsonar.organization=mygit-project -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=3116af451be6386c60b5af22a992a15400eb9fe3'
+ //		sh 'mvn clean verify sonar:sonar -Dsonar.projectKey=mygit-project -Dsonar.organization=mygit-project -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$sonar'
  //			}
  //  }
 
@@ -36,7 +39,7 @@ pipeline {
             steps { 
                withDockerRegistry([credentialsId: "dockerhub", url: ""]) {
                  script{
-                 app =  docker.build("maheshdcloud84/devssecops")
+                 app =  docker.build("maheshcloud84/devsecops")
                  }
                }
             }
