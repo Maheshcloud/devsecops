@@ -22,6 +22,7 @@
 		<jvm.args.gc.log.file.size>-XX:GCLogFileSize=10M</jvm.args.gc.log.file.size>
 	</properties>
 
+
 	<profiles>
 		<profile>
 			<id>JDK8-Switch</id>
