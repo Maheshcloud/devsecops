@@ -50,11 +50,11 @@ pipeline {
 	    post {
        // only triggered when blue or green sign
        success {
-           notifySlack(SUCCESS)
+           notifySlack()
        }
        // triggered when red sign
        failure {
-           notifySlack(UNSTABLE)
+           notifySlack()
        }
        // trigger every-works
        always {
@@ -96,6 +96,7 @@ def notifySlack(String buildStatus = 'STARTED') {
     }
 
     def msg = "${buildStatus}: `${env.JOB_NAME}` #${env.BUILD_NUMBER}:\n${env.BUILD_URL}"
+    
 
     slackSend(color: color, message: msg)
 
