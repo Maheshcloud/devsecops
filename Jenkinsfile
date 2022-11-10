@@ -61,7 +61,18 @@ pipeline {
    
 	   
 	    post {
-       notifyBuild(currentBuild.result)
+       
+		    success {
+           notifyBuild(currentBuild.result)
+       }
+       // triggered when red sign
+       failure {
+           notifyBuild(currentBuild.result)
+       }
+       // trigger every-works
+       always {
+           notifyBuild(currentBuild.result)
+       }
     }
 		  }    
   }
