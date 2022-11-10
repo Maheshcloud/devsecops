@@ -17,5 +17,5 @@ jobs:
               teams:
                 - @maheshcloud
         status: Required review
-        fail: true
+      #  fail: true
         token: ${{ secrets.GITHUB_TOKEN }}
