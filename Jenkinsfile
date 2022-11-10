@@ -40,28 +40,7 @@ pipeline {
             }
     }
 	   
-	  stage('slack notification'){
-       steps{
-            slackSend baseUrl: 'https://hooks.slack.com/services/', channel: '#jenkins', color: 'green', message: 'Build info', tokenCredentialId: 'slack_notification', username: 'maheshdte'
-          // slackSend "Build Started - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
-       }
-   
-	   
-	    post {
-       // only triggered when blue or green sign
-       success {
-           notifySlack(SUCCESS)
-       }
-       // triggered when red sign
-       failure {
-           notifySlack(UNSTABLE)
-       }
-       // trigger every-works
-       always {
-           notifySlack()
-       }
-    }
-		  }
+	
 
 	stage('Push') {
             steps {
@@ -74,29 +53,43 @@ pipeline {
                 }
             }
     	}
-	    
+	  stage('slack notification'){
+       steps{
+            slackSend baseUrl: 'https://hooks.slack.com/services/', channel: '#jenkins', color: 'green', message: 'Build info', tokenCredentialId: 'slack_notification', username: 'maheshdte'
+          // slackSend "Build Started - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
+       }
+   
+	   
+	    post {
+       notifyBuild(currentBuild.result)
+    }
+		  }    
   }
 }
 
 
-def notifySlack(String buildStatus = 'STARTED') {
-    // Build status of null means success.
-    buildStatus = buildStatus ?: 'SUCCESS'
+def notifyBuild(String buildStatus = 'STARTED') {
+  // build status of null means successful
+  buildStatus =  buildStatus ?: 'SUCCESSFUL'
 
-    def color
+  // Default values
+  def colorName = 'RED'
+  def colorCode = '#FF0000'
+  def subject = "${buildStatus}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'"
+  def summary = "${subject} (${env.BUILD_URL})"
 
-    if (buildStatus == 'STARTED') {
-        color = '#D4DADF'
-    } else if (buildStatus == 'SUCCESS') {
-        color = '#BDFFC3'
-    } else if (buildStatus == 'UNSTABLE') {
-        color = '#FFFE89'
-    } else {
-        color = '#FF9FA1'
-    }
+  // Override default values based on build status
+  if (buildStatus == 'STARTED') {
+    color = 'YELLOW'
+    colorCode = '#FFFF00'
+  } else if (buildStatus == 'SUCCESSFUL') {
+    color = 'GREEN'
+    colorCode = '#00FF00'
+  } else {
+    color = 'RED'
+    colorCode = '#FF0000'
+  }
 
-    def msg = "${buildStatus}: `${env.JOB_NAME}` #${env.BUILD_NUMBER}:\n${env.BUILD_URL}"
-
-    slackSend(color: color, message: msg)
-
+  // Send notifications
+  slackSend (color: colorCode, message: summary)
 }
