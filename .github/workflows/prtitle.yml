@@ -1,6 +1,6 @@
 name: PR Name check
 
-On: 
+on: 
   pull_request:
    types: [opened, edited, synchronize]
 jobs: 
