@@ -34,7 +34,7 @@ pipeline {
             steps { 
                withDockerRegistry([credentialsId: "dockerhub", url: ""]) {
                  script{
-                 app =  docker.build("maheshcloud84/devsecops")
+                 app =  docker.build("test")
                  }
                }
             }
@@ -42,18 +42,18 @@ pipeline {
 	   
 	  stage('slack notification'){
        steps{
-           // slackSend baseUrl: 'https://hooks.slack.com/services/', channel: '#jenkins', color: 'green', message: 'Build info', tokenCredentialId: 'slack_notification', username: 'maheshdte'
-           slackSend "Build Started - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
+           slackSend baseUrl: 'https://hooks.slack.com/services/', channel: '#jenkins', color: 'green', message: 'Build info', tokenCredentialId: 'slack_notification', username: 'maheshdte'
+           //slackSend "Build Started - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
        }
    }
 
 	stage('Push') {
             steps {
                 script{
-                    //docker.withRegistry('https://145988340565.dkr.ecr.us-west-2.amazonaws.com', 'ecr:us-west-2:aws-credentials') {
-                    //app.push("latest")
-                    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
-                    app.push("${env.BUILD_NUMBER}")
+                    docker.withRegistry('https://798616169137.dkr.ecr.us-east-1.amazonaws.com', 'ecr:us-east-1:aws-credentials') {
+                    app.push("latest")
+                   // docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
+                   // app.push("${env.BUILD_NUMBER}")
                     }
                 }
             }
